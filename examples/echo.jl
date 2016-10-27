@@ -73,8 +73,7 @@ try
   wsconnect(client, uri, handler)
   println("Connected.")
 catch ex
-  s = string(ex)
-  enqueue!(stop_signal, s)
+  enqueue!(stop_signal, string(ex))
 end
 
 while true

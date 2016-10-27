@@ -24,3 +24,20 @@ The package name "DandelionWebSockets" has been renamed to a more generic name "
 Please see the original README:
 
 - [WebSocketClient](README-DandelionWebSockets.md)
+
+## Julia package manager
+
+to use this package, just do 
+```
+Pkg.add("WebSocketClient")
+```
+
+To test, write a Java web socket echo server listening to "ws://127.0.0.1:8087/ws/hello".
+"cd" to the example folder and enter "julia echo.jl"
+
+## Package registration
+
+This refactoring work is contributed by Eric Law, cloud platform architect, platform team, SRI International at https://www.sri.com
+
+It has been registered with the Julia package system on 10/27/2016.
+
