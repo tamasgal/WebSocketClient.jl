@@ -10,19 +10,19 @@ headers = Dict(
 )
 
 type TestHandler <: WebSocketHandler
-    received_texts::Vector{UTF8String}
+    received_texts::Vector{String}
     received_datas::Vector{Vector{UInt8}}
     stop_chan::Channel{Symbol}
     close_on_message::Bool # If true, initiates a closing handshake on the first message.
     client::WSClient
     is_closed::Bool
 
-    TestHandler(client::WSClient) = new(Vector{UTF8String}(), [], Channel{Symbol}(5), false, client, false)
+    TestHandler(client::WSClient) = new(Vector{String}(), [], Channel{Symbol}(5), false, client, false)
     TestHandler(client::WSClient, close_on_message::Bool) =
-        new(Vector{UTF8String}(), [], Channel{Symbol}(5), close_on_message, client, false)
+        new(Vector{String}(), [], Channel{Symbol}(5), close_on_message, client, false)
 end
 
-function on_text(h::TestHandler, text::UTF8String)
+function on_text(h::TestHandler, text::String)
     push!(h.received_texts, text)
     if h.close_on_message
         stop(h.client)
@@ -46,7 +46,7 @@ function state_closed(h::TestHandler)
 end
 
 wait(t::TestHandler) = take!(t.stop_chan)
-function expect_text(t::TestHandler, expected::UTF8String)
+function expect_text(t::TestHandler, expected::String)
     @fact t.received_texts --> not(isempty)
 
     actual = shift!(t.received_texts)

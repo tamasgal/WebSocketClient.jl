@@ -14,8 +14,8 @@ end
 
 foo(m::MockTaskProxyTarget) = called(m, :foo)
 bar(m::MockTaskProxyTarget, i::Int) = called(m, :bar, i)
-baz(m::MockTaskProxyTarget, s::UTF8String) = called(m, :baz, s)
-qux(m::MockTaskProxyTarget, i::Int, s::UTF8String) = called(m, :qux, i, s)
+baz(m::MockTaskProxyTarget, s::String) = called(m, :baz, s)
+qux(m::MockTaskProxyTarget, i::Int, s::String) = called(m, :qux, i, s)
 
 function expect_call(m::MockTaskProxyTarget, f::Symbol, expected_args...)
     @fact isempty(m.call) --> false

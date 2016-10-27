@@ -5,14 +5,14 @@ headers = Dict(
 )
 
 type MockRequest
-    accept::ASCIIString
+    accept::String
 
     uri::Requests.URI
-    method::ASCIIString
+    method::String
     headers::Dict
 
 
-    MockRequest(accept::ASCIIString) = new(accept, Requests.URI("http://some/uri"),
+    MockRequest(accept::String) = new(accept, Requests.URI("http://some/uri"),
         ascii("method"), Dict())
 end
 
@@ -25,7 +25,7 @@ type FakeResponseStream
     response::FakeResponse
 end
 
-function mock_do_stream_request(m::MockRequest, uri::Requests.URI, method::ASCIIString;
+function mock_do_stream_request(m::MockRequest, uri::Requests.URI, method::String;
     headers=Dict(),
     tls_conf=Requests.TLS_VERIFY,
     response_headers=Dict{Any,Any}())
@@ -93,7 +93,7 @@ facts("Handshake") do
         uri = Requests.URI("http://localhost:8000")
 
         m = MockRequest(expected_accept)
-        function do_req(uri::Requests.URI, method::ASCIIString; headers=Dict())
+        function do_req(uri::Requests.URI, method::String; headers=Dict())
             mock_do_stream_request(m, uri, method;
                 headers=headers,
                 response_headers=expected_response_headers)
@@ -127,7 +127,7 @@ facts("Handshake") do
         ssl_uri = Requests.URI("https://localhost:8000")
 
         m = MockRequest(expected_accept)
-        do_req(uri::Requests.URI, method::ASCIIString; headers=Dict()) =
+        do_req(uri::Requests.URI, method::String; headers=Dict()) =
             mock_do_stream_request(m, uri, method; headers=headers)
 
         normal_handshake_result = DandelionWebSockets.do_handshake(rng, uri; do_request=do_req)

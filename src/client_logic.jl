@@ -29,7 +29,7 @@ abstract ClientLogicInput
 
 "Send a text frame, sent to `ClientLogic`."
 immutable SendTextFrame <: ClientLogicInput
-	data::UTF8String
+	data::String
 	# True if this is the final frame in the text message.
 	isfinal::Bool
 	# What WebSocket opcode should be used.

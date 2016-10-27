@@ -15,7 +15,7 @@ end
 t = MockTester()
 @mockfunction(t,
     foo(::MockTester, ::Int, ::Int),
-    bar(a::UTF8String, ::Int),
+    bar(a::String, ::Int),
     baz(x::Vector{UInt8}))
 
 facts("Test mock") do

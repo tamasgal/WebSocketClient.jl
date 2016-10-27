@@ -35,7 +35,12 @@ macro taskproxy(proxy_type::Symbol, abstract_type::Symbol, target_type::Symbol, 
 
             function do_proxy(p::$proxy_type, target::$target_type)
                 for (f, args) in p.chan
+                  try
                     f(target, args...)
+                  catch ex
+                    # task can fail when socket closed
+                    println("WARN: " * ex.msg)
+                  end
                 end
             end
 

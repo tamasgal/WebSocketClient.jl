@@ -1,22 +1,19 @@
-# Example of DandelionWebSocket.jl:
-# Send some text and binary frames to ws://echo.websocket.org, which echoes them back.
+using DataStructures
+q = Queue(Any)
 
 using DandelionWebSockets
 import Requests: URI
 
-# Explicitly import the callback functions that we're going to add more methods for.
 import DandelionWebSockets: on_text, on_binary,
                             state_connecting, state_open, state_closing, state_closed
 
-# A simple WebSocketHandler which sends a few messages, receives echoes back, and then sends a stop
-# signal via a channel when it's done.
 type EchoHandler <: WebSocketHandler
     client::WSClient
-    stop_channel::Channel{Any}
+    stop_channel::Queue{Any}  #Channel{Any}
 end
 
 # These are called when you get text/binary frames, respectively.
-on_text(::EchoHandler, s::UTF8String)         = println("Received text: $s")
+on_text(::EchoHandler, s::String)         = println("Received text: $s")
 on_binary(::EchoHandler, data::Vector{UInt8}) = println("Received data: $data")
 
 # These are called when the WebSocket state changes.
@@ -28,51 +25,62 @@ state_connecting(::EchoHandler) = println("State: CONNECTING")
 function state_open(handler::EchoHandler)
     println("State: OPEN")
 
-    # Send some text frames, and a binary frame.
-    @schedule begin
-        texts = [utf8("Hello"), utf8("world"), utf8("!")]
+    @async send_test_messages(q, handler)
 
-        for text in texts
-            println("Sending  text: $text")
-            send_text(handler.client, text)
-            sleep(0.5)
+    # Send some text frames, and a binary frame.
+    @async begin
+
+        for i in 1:10000
+            println("Sending: ", i)
+            enqueue!(q, "hello - " * string(i));
+            yield()
         end
 
         send_binary(handler.client, b"Hello, binary!")
-        sleep(0.5)
 
-        # Signal the script that we're done sending all messages.
-        # The script will then close the connection.
-        put!(stop_chan, true)
+        # Signal that we're done sending all messages.
+        # stop(handler.client)
     end
 end
 
-function state_closed(::EchoHandler)
-    println("State: CLOSED")
+function send_test_messages(q::Queue, handler::EchoHandler)
+         println("STARTED")
+         while true
+           if !isempty(q)
+             s = dequeue!(q);
+             send_text(handler.client, s)
+           end
+           yield()
+          end
+       end
 
+function state_closed(handler::EchoHandler)
+    println("State: CLOSED")
     # Signal the script that the connection is closed.
-    put!(stop_chan, true)
+    enqueue!(handler.stop_channel, "closed") #put
 end
 
-stop_chan = Channel{Any}(3)
+stop_signal = Queue(Any) #Channel{Any}(3)
 
 # Create a WSClient, which we can use to connect and send frames.
 client = WSClient()
+handler = EchoHandler(client, stop_signal)
 
-handler = EchoHandler(client, stop_chan)
-
-uri = URI("ws://echo.websocket.org")
+uri = URI("ws://127.0.0.1:8087/ws/hello")
 println("Connecting to $uri... ")
 
-wsconnect(client, uri, handler)
+try
+  wsconnect(client, uri, handler)
+  println("Connected.")
+catch ex
+  s = string(ex)
+  enqueue!(stop_signal, s)
+end
 
-println("Connected.")
-
-# The first message on `stop_chan` indicates that all messages have been sent, and we should
-# close the connection.
-take!(stop_chan)
-
-stop(client)
-
-# The second message on `stop_chan` indicates that the connection is closed, so we can exit.
-take!(stop_chan)
+while true
+  if !isempty(stop_signal)
+    println(dequeue!(stop_signal))
+    break
+  end
+  yield()
+end

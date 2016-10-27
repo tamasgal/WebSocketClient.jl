@@ -11,7 +11,7 @@ type MyHandler <: WebSocketHandler
 end
 
 # These are called when you get a text or binary frame, respectively.
-on_text(handler::MyHandler, text::UTF8String) = ...
+on_text(handler::MyHandler, text::String) = ...
 on_binary(handler::MyHandler, data::Vector{UInt8}) = ...
 
 # These are called when the state of the WebSocket changes.
@@ -24,7 +24,7 @@ state_closed(handler::MyHandler)     = ...
 The following functions are available on `WSClient`, to send frames to the server.
 
 ```
-send_text(c::WSClient, s::UTF8String)
+send_text(c::WSClient, s::String)
 send_binary(c::WSClient, data::Vector{UInt8})
 
 # Close the WebSocket.

@@ -4,14 +4,14 @@ import DandelionWebSockets: on_text, on_binary,
 
 
 immutable MockHandler <: DandelionWebSockets.WebSocketHandler
-    texts::Vector{UTF8String}
+    texts::Vector{String}
     datas::Vector{Vector{UInt8}}
     states::Vector{Symbol}
 
     MockHandler() = new([], [], [])
 end
 
-on_text(h::MockHandler, text::UTF8String) = push!(h.texts, text)
+on_text(h::MockHandler, text::String) = push!(h.texts, text)
 on_binary(h::MockHandler, data::Vector{UInt8}) = push!(h.datas, data)
 
 state_connecting(h::MockHandler) = push!(h.states, :state_connecting)
@@ -19,7 +19,7 @@ state_open(h::MockHandler) = push!(h.states, :state_open)
 state_closing(h::MockHandler) = push!(h.states, :state_closing)
 state_closed(h::MockHandler) = push!(h.states, :state_closed)
 
-function expect_text(h::MockHandler, expected::UTF8String)
+function expect_text(h::MockHandler, expected::String)
     @fact h.texts --> x -> !isempty(x)
 
     actual = shift!(h.texts)
