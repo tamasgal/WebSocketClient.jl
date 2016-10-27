@@ -39,7 +39,7 @@ macro taskproxy(proxy_type::Symbol, abstract_type::Symbol, target_type::Symbol, 
                     f(target, args...)
                   catch ex
                     # task can fail when socket closed
-                    println("WARN: " * ex.msg)
+                    println("WARN: " * string(ex))
                   end
                 end
             end
