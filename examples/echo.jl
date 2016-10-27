@@ -1,15 +1,15 @@
 using DataStructures
 q = Queue(Any)
 
-using DandelionWebSockets
 import Requests: URI
 
-import DandelionWebSockets: on_text, on_binary,
-                            state_connecting, state_open, state_closing, state_closed
+using WebSocketClient
+import WebSocketClient: on_text, on_binary,
+                        state_connecting, state_open, state_closing, state_closed
 
 type EchoHandler <: WebSocketHandler
     client::WSClient
-    stop_channel::Queue{Any}  #Channel{Any}
+    stop_channel::Queue{Any}
 end
 
 # These are called when you get text/binary frames, respectively.
@@ -60,7 +60,7 @@ function state_closed(handler::EchoHandler)
     enqueue!(handler.stop_channel, "closed") #put
 end
 
-stop_signal = Queue(Any) #Channel{Any}(3)
+stop_signal = Queue(Any)
 
 # Create a WSClient, which we can use to connect and send frames.
 client = WSClient()

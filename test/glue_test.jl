@@ -51,7 +51,7 @@ facts("Task proxy") do
 
         state_connecting(proxy)
         state_open(proxy)
-        on_text(proxy, utf8("Hello"))
+        on_text(proxy, String("Hello"))
         on_binary(proxy, b"Hello")
         state_closing(proxy)
         state_closed(proxy)
@@ -64,7 +64,7 @@ facts("Task proxy") do
 
         expect_state(handler, :state_connecting)
         expect_state(handler, :state_open)
-        expect_text(handler, utf8("Hello"))
+        expect_text(handler, String("Hello"))
         expect_data(handler, b"Hello")
         expect_state(handler, :state_closing)
         expect_state(handler, :state_closed)

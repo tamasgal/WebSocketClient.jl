@@ -55,15 +55,15 @@ facts("Task proxy") do
 
                 foo(pump)
                 bar(pump, 42)
-                baz(pump, utf8("Hitchhiker"))
-                qux(pump, 42, utf8("Hitchhiker"))
+                baz(pump, String("Hitchhiker"))
+                qux(pump, 42, String("Hitchhiker"))
                 sleep(0.3)
 
                 stop(pump)
                 expect_call(t, :foo)
                 expect_call(t, :bar, 42)
-                expect_call(t, :baz, utf8("Hitchhiker"))
-                expect_call(t, :qux, 42, utf8("Hitchhiker"))
+                expect_call(t, :baz, String("Hitchhiker"))
+                expect_call(t, :qux, 42, String("Hitchhiker"))
             end
         end
     end

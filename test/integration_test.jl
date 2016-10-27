@@ -88,7 +88,7 @@ facts("Integration test") do
         wsconnect(client, uri, handler)
 
         # Write a message "Hello"
-        send_text(client, utf8("Hello"))
+        send_text(client, String("Hello"))
         send_binary(client, b"Hello, binary")
 
         # Sleep for a few seconds to let all the messages be sent and received
@@ -98,8 +98,8 @@ facts("Integration test") do
 
         # We expect that the server sent two Hello messages, in three frames.
         # One frame was a complete Hello text message, the other two are fragmented into two parts.
-        expect_text(handler, utf8("Hello"))
-        expect_text(handler, utf8("Hello"))
+        expect_text(handler, String("Hello"))
+        expect_text(handler, String("Hello"))
         expect_binary(handler, b"Hello")
 
         # We expect one text message "Hello", one binary message, and one close control frame to
@@ -129,7 +129,7 @@ facts("Integration test") do
         wsconnect(client, uri, handler)
 
         # Write a message "Hello"
-        send_text(client, utf8("Hello"))
+        send_text(client, String("Hello"))
 
         # Sleep for a few seconds to let all the messages be sent and received
         sleep(2.0)
@@ -138,7 +138,7 @@ facts("Integration test") do
 
         # Connect again.
         wsconnect(client, uri, handler)
-        send_text(client, utf8("Hello"))
+        send_text(client, String("Hello"))
         # Sleep for a few seconds to let all the messages be sent and received
         sleep(2.0)
         # Wait for the handler to receive close confirmation.
@@ -179,9 +179,9 @@ facts("Integration test") do
         @fact handshake_uri --> expected_uri
 
         # Send a message "Hello" from client to server.
-        send_text(client, utf8("Hello"))
+        send_text(client, String("Hello"))
         # Send a message "world" from client to server.
-        send_text(client, utf8("world"))
+        send_text(client, String("world"))
 
         # Sleep for a few seconds to let all the messages be sent and received
         sleep(1.0)
@@ -190,7 +190,7 @@ facts("Integration test") do
 
         # We expect that the server sent two Hello messages, in three frames.
         # One frame was a complete Hello text message, the other two are fragmented into two parts.
-        expect_text(handler, utf8("Hello"))
+        expect_text(handler, String("Hello"))
 
         # We expect one close frame and two message "Hello" and "world" to have been sent.
         @fact length(stream.writing) --> 3
@@ -244,7 +244,7 @@ facts("Integration test") do
 
     context("Check that default callbacks do nothing") do
         h = FakeHandler()
-        on_text(h, utf8("Hello"))
+        on_text(h, String("Hello"))
         on_binary(h, b"Hello")
         state_closed(h)
         state_closing(h)

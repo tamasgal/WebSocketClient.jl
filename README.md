@@ -1,46 +1,22 @@
-# DandelionWebSockets
-DandelionWebSockets is a client side WebSocket package.
+# WebSocketClient
+
+## Origin
+
+This Julia package is originally forked from https://github.com/dandeliondeathray/DandelionWebSockets.jl
+
+## Purpose
+
+The original DandelionWebSockets is a nice addition of a client side web socket library for Julia.
+
+Julia is a great scientific programming tool. However, its networking functionality is very primitive.
+
+We intend to extend DandelionWebSockets as a generic web socket client.
+
+The typical use case is to attach one or more Julia applications to a "resource-tier" application server.
+The resource-tier application server may be written in a general purpose programming language like Java.
 
 ## Usage
-Create a subtype of `WebSocketHandler`, with callbacks for WebSocket events. Create a `WSClient` and
-connect to a WebSocket server.
 
-```
-type MyHandler <: WebSocketHandler
-    client::WSClient
-end
+Please see the original README:
 
-# These are called when you get a text or binary frame, respectively.
-on_text(handler::MyHandler, text::String) = ...
-on_binary(handler::MyHandler, data::Vector{UInt8}) = ...
-
-# These are called when the state of the WebSocket changes.
-state_connecting(handler::MyHandler) = ...
-state_open(handler::MyHandler)       = ...
-state_closing(handler::MyHandler)    = ...
-state_closed(handler::MyHandler)     = ...
-```
-
-The following functions are available on `WSClient`, to send frames to the server.
-
-```
-send_text(c::WSClient, s::String)
-send_binary(c::WSClient, data::Vector{UInt8})
-
-# Close the WebSocket.
-stop(c::WSClient)
-```
-
-To connect to a WebSocket server, call
-`wsconnect(client::WSClient, uri::URI, handler::WebSocketHandler)`.
-
-## Needs work
-
-- Implement regular pings, to ensure the connection is up.
-- Wait for Requests.jl next release.
-  This package needs a HTTP Upgrade feature of Requests.jl, which is only present in master, not in
-  the release 0.3.7.
-- Ability to send multi-frame messages.
-
-## License
-DandelionWebSockets is licensed under the MIT license.
+- [DandelionWebSockets](README-DandelionWebSockets.md)

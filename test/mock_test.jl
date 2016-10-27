@@ -23,11 +23,11 @@ facts("Test mock") do
         some_arg = 17
 
         @expect t foo(t, some_arg, 42)
-        @expect t bar(utf8("Hello"), -5) 42
+        @expect t bar(String("Hello"), -5) 42
         @expect t baz(b"Hello")
 
         @fact foo(t, some_arg, 42) --> nothing
-        @fact bar(utf8("Hello"), -5) --> 42
+        @fact bar(String("Hello"), -5) --> 42
         @fact baz(b"Hello") --> nothing
 
         check(t)

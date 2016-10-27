@@ -1,4 +1,4 @@
-module DandelionWebSockets
+module WebSocketClient
 
 export AbstractWSClient,
        WSClient,
