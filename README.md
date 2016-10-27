@@ -4,11 +4,11 @@
 
 This Julia package is originally forked from https://github.com/dandeliondeathray/WebSocketClient.jl
 
-## Purpose
-
 The original WebSocketClient is a nice addition of a client side web socket library for Julia.
 
-Julia is a great scientific programming tool. However, its networking functionality is very primitive.
+## Purpose
+
+Julia is a great scientific programming tool. However, its networking functionality is limited.
 
 We intend to extend WebSocketClient as a generic web socket client.
 
