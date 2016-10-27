@@ -27,7 +27,7 @@ Please see the original README:
 
 ## Julia package manager
 
-to use this package, just do 
+To install this package, just start "julia" at the command line and do 
 ```
 Pkg.add("WebSocketClient")
 ```
