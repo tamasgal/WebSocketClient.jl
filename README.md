@@ -23,4 +23,4 @@ The package name "DandelionWebSockets" has been renamed to a more generic name "
 
 Please see the original README:
 
-- [WebSocketClient](README-WebSocketClient.md)
+- [WebSocketClient](README-DandelionWebSockets.md)
