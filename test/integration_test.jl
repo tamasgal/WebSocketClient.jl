@@ -1,4 +1,4 @@
-import DandelionWebSockets: on_text, on_binary,
+import WebSocketClient: on_text, on_binary,
                             state_connecting, state_open, state_closing, state_closed,
                             FrameFromServer
 
@@ -75,7 +75,7 @@ facts("Integration test") do
         stream = FakeFrameStream(server_to_client_frames, Vector{Frame}(), true)
 
         body = Vector{UInt8}()
-        handshake_result = DandelionWebSockets.HandshakeResult(
+        handshake_result = WebSocketClient.HandshakeResult(
             accept_field, # This is the accept value we expect, and matches that in the headers dict.
             stream,
             headers,
@@ -116,7 +116,7 @@ facts("Integration test") do
         stream = FakeFrameStream(server_to_client_frames, Vector{Frame}(), true)
 
         body = Vector{UInt8}()
-        handshake_result = DandelionWebSockets.HandshakeResult(
+        handshake_result = WebSocketClient.HandshakeResult(
             accept_field, # This is the accept value we expect, and matches that in the headers dict.
             stream,
             headers,
@@ -157,7 +157,7 @@ facts("Integration test") do
         stream = FakeFrameStream(server_to_client_frames, Vector{Frame}(), false)
 
         body = Vector{UInt8}()
-        handshake_result = DandelionWebSockets.HandshakeResult(
+        handshake_result = WebSocketClient.HandshakeResult(
             accept_field, # This is the accept value we expect, and matches that in the headers dict.
             stream,
             headers,
@@ -203,7 +203,7 @@ facts("Integration test") do
         stream = FakeFrameStream(Vector{Frame}(), Vector{Frame}(), false)
 
         body = Vector{UInt8}()
-        handshake_result = DandelionWebSockets.HandshakeResult(
+        handshake_result = WebSocketClient.HandshakeResult(
             accept_field, # This is the accept value we expect, and matches that in the headers dict.
             stream,
             headers,

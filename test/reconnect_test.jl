@@ -1,4 +1,4 @@
-import DandelionWebSockets: backoff_min, backoff_max, reset
+import WebSocketClient: backoff_min, backoff_max, reset
 
 type FakeBackoff <: AbstractBackoff
     values::Vector{Float64}

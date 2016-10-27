@@ -1,5 +1,5 @@
-# DandelionWebSockets
-DandelionWebSockets is a client side WebSocket package.
+# WebSocketClient
+WebSocketClient (originally termed "DandelionWebSockets") is a client side WebSocket package.
 
 ## Usage
 Create a subtype of `WebSocketHandler`, with callbacks for WebSocket events. Create a `WSClient` and
@@ -43,4 +43,4 @@ To connect to a WebSocket server, call
 - Ability to send multi-frame messages.
 
 ## License
-DandelionWebSockets is licensed under the MIT license.
+WebSocketClient is licensed under the MIT license.

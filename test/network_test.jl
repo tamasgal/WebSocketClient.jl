@@ -1,5 +1,5 @@
 import Base: read, write, readavailable
-import DandelionWebSockets:
+import WebSocketClient:
     start, start_reader, stop, WriterTaskProxy, FrameFromServer, SocketClosed, ClientLogicTaskProxy
 
 
@@ -203,7 +203,7 @@ facts("Byte stream from SSL socket") do
         fake_tls = FakeTLSStream()
         write(fake_tls.buf, Vector{UInt8}([1,2]))
 
-        s = DandelionWebSockets.TLSBufferedIO(fake_tls)
+        s = WebSocketClient.TLSBufferedIO(fake_tls)
 
         @fact read(s, UInt8) --> 1
         @fact read(s, UInt8) --> 2
@@ -214,14 +214,14 @@ facts("Byte stream from SSL socket") do
         test_write(fake_tls, test_frame1)
         test_write(fake_tls, network_test_frame4)
 
-        s = DandelionWebSockets.TLSBufferedIO(fake_tls)
+        s = WebSocketClient.TLSBufferedIO(fake_tls)
         @fact read(s, Frame) --> test_frame1
         @fact read(s, Frame) --> network_test_frame4
     end
 
     context("Write frames via TLSBufferedIO") do
         fake_tls = FakeTLSStream()
-        s = DandelionWebSockets.TLSBufferedIO(fake_tls)
+        s = WebSocketClient.TLSBufferedIO(fake_tls)
 
         mark(fake_tls.write_buf)
         write(s, test_frame1)

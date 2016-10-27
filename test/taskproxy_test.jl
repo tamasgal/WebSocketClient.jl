@@ -1,4 +1,4 @@
-import DandelionWebSockets: @taskproxy, TaskProxy, start, stop, ProxyCall, attach, is_set
+import WebSocketClient: @taskproxy, TaskProxy, start, stop, ProxyCall, attach, is_set
 
 type MockTaskProxyTarget
     call::Vector{Symbol}

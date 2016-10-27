@@ -1,4 +1,4 @@
-import DandelionWebSockets: HandshakeResult, HandshakeFailure,
+import WebSocketClient: HandshakeResult, HandshakeFailure,
     AbstractServerReader, start_reader, stop, attach, start,
     AbstractPinger, CloseRequest
 

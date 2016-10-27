@@ -1,4 +1,4 @@
-import DandelionWebSockets: AbstractHandlerTaskProxy, AbstractWriterTaskProxy, AbstractClientTaskProxy,
+import WebSocketClient: AbstractHandlerTaskProxy, AbstractWriterTaskProxy, AbstractClientTaskProxy,
     on_text, on_binary,
     state_connecting, state_open, state_closing, state_closed,
     write, handle, FrameFromServer
@@ -183,7 +183,7 @@ end
 
 function Base.write(s::FakeFrameStream, frame::Frame)
     push!(s.writing, frame)
-    if frame.opcode == DandelionWebSockets.OPCODE_CLOSE
+    if frame.opcode == WebSocketClient.OPCODE_CLOSE
         put!(s.stop_chan, :stop)
     end
 end

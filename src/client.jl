@@ -36,7 +36,7 @@ type WSClient <: AbstractWSClient
     pinger::AbstractPinger
 
     function WSClient(;
-                      do_handshake=DandelionWebSockets.do_handshake,
+                      do_handshake=WebSocketClient.do_handshake,
                       rng::AbstractRNG=MersenneTwister(),
                       writer::AbstractWriterTaskProxy=WriterTaskProxy(),
                       handler_proxy::AbstractHandlerTaskProxy=HandlerTaskProxy(),

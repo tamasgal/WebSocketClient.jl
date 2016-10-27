@@ -139,11 +139,11 @@ macro mockfunction(t::Symbol, fdefs...)
             for i in range(1, length(mock_call.args))
                 matcher = mock_call.args[i]
                 arg = args[i]
-                DandelionWebSockets.mock_match(matcher, arg)
+                WebSocketClient.mock_match(matcher, arg)
             end
 
             # Perform the action set with the @expect macro.
-            return DandelionWebSockets.mock_action(mock_call.action)
+            return WebSocketClient.mock_action(mock_call.action)
         end
 
         fun = Expr(:function)
