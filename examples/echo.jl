@@ -60,25 +60,22 @@ function state_closed(handler::EchoHandler)
     enqueue!(handler.stop_channel, "closed") #put
 end
 
-stop_signal = Queue(Any)
-
 # Create a WSClient, which we can use to connect and send frames.
-client = WSClient()
-handler = EchoHandler(client, stop_signal)
+handler = EchoHandler(WSClient(), Queue(Any))
 
 uri = URI("ws://127.0.0.1:8087/ws/hello")
 println("Connecting to $uri... ")
 
 try
-  wsconnect(client, uri, handler)
+  wsconnect(handler.client, uri, handler)
   println("Connected.")
 catch ex
-  enqueue!(stop_signal, string(ex))
+  enqueue!(handler.stop_channel, string(ex))
 end
 
 while true
-  if !isempty(stop_signal)
-    println(dequeue!(stop_signal))
+  if !isempty(handler.stop_channel)
+    println(dequeue!(handler.stop_channel))
     break
   end
   yield()

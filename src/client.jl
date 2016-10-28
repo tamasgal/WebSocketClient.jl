@@ -144,8 +144,11 @@ end
 stop(c::WSClient) = handle(c.logic_proxy, CloseRequest())
 
 "Send a single text frame."
-send_text(c::WSClient, s::String) = handle(c.logic_proxy, SendTextFrame(s, true, OPCODE_TEXT))
+# make a copy of the string before passing to SendTextFrame because the input string will be modified by the method
+send_text(c::WSClient, s::String) =
+  handle(c.logic_proxy, SendTextFrame(s * "", true, OPCODE_TEXT))
 
 "Send a single binary frame."
+# make a copy of the byte array before passing to SendTextFrame because the byte array will be modified by the method
 send_binary(c::WSClient, data::Vector{UInt8}) =
-    handle(c.logic_proxy, SendBinaryFrame(data, true, OPCODE_BINARY))
+    handle(c.logic_proxy, SendBinaryFrame(copy(data), true, OPCODE_BINARY))

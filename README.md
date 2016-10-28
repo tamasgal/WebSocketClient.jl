@@ -17,7 +17,11 @@ The resource-tier application server may be written in a general purpose program
 
 ## Refactoring
 
-The package name "DandelionWebSockets" has been renamed to a more generic name "WebSocketClient". The package has been updated for Julia 0.5 with Unicode support.
+1. The package name "DandelionWebSockets" has been renamed to a more generic name "WebSocketClient".
+2. The package has been updated for Julia 0.5 with Unicode support - "utf8" is updated to "String".
+3. The reconnect.jl has been removed. It is the responsibility of the user application to decide whether to reconnect.
+4. A true end-to-end client-server test replaces the mock network_test.jl.
+5. Minor bug fix for client.jl - makes input string and byte array immutable.
 
 ## Usage
 
@@ -54,3 +58,7 @@ $ julia echo.jl
 ```
 This will run the echo example script. You will see it sending 10,000 text messages and one binary message.
 The web socket server will echo them back as text messages.
+
+## Pre-requisites for julia tests
+
+Please install "DataStructures" and "FactCheck". The end_to_end_test.jl uses the Queue object (from DataStructures) to send control signals and messages because the WebSocketClient is event-driven. FactCheck is used as the test framework.

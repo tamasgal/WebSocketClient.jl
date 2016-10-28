@@ -1,7 +1,7 @@
 using HttpServer
-using WebSockets
+import WebSockets
 
-wsh = WebSocketHandler() do req,client
+wsh = WebSockets.WebSocketHandler() do req,client
     println("Connected to: " * req.resource);
 
     while isopen(client)
@@ -14,13 +14,9 @@ wsh = WebSocketHandler() do req,client
         write(client, s)
     end
     println("Disconnected");
-
-    println("--- bye ---")
-#     close(server.http.sock)
   end
 
 server = Server(wsh)
-
 
 try
   run(server,8087)
