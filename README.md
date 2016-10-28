@@ -56,8 +56,11 @@ To run the example echo.jl
 ```
 $ julia echo.jl
 ```
-This will run the echo example script. You will see it sending 10,000 text messages and one binary message.
+This will run the echo example script. It will send 100 text messages and one binary message.
 The web socket server will echo them back as text messages.
+
+When echo.jl finishes, it will tell the web socket server to stop.
+To rerun the example, start the server and then the client again.
 
 ## Pre-requisites for julia tests
 

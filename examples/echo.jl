@@ -13,12 +13,12 @@ type EchoHandler <: WebSocketHandler
 end
 
 # These are called when you get text/binary frames, respectively.
-on_text(::EchoHandler, s::String)         = println("Received text: $s")
+on_text(::EchoHandler, s::String) = println("Received text: $s")
 on_binary(::EchoHandler, data::Vector{UInt8}) = println("Received data: $data")
 
 # These are called when the WebSocket state changes.
 
-state_closing(::EchoHandler)    = println("State: CLOSING")
+state_closing(::EchoHandler) = println("State: CLOSING")
 state_connecting(::EchoHandler) = println("State: CONNECTING")
 
 # Called when the connection is open, and ready to send/receive messages.
@@ -30,7 +30,7 @@ function state_open(handler::EchoHandler)
     # Send some text frames, and a binary frame.
     @async begin
 
-        for i in 1:10000
+        for i in 1:100
             println("Sending: ", i)
             enqueue!(q, "hello - " * string(i));
             yield()
@@ -38,7 +38,8 @@ function state_open(handler::EchoHandler)
 
         send_binary(handler.client, b"Hello, binary!")
 
-        # Signal that we're done sending all messages.
+        # Signal that we're done sending all messages
+        send_text(handler.client, "bye");
         stop(handler.client)
     end
 end
@@ -55,9 +56,9 @@ function send_test_messages(q::Queue, handler::EchoHandler)
        end
 
 function state_closed(handler::EchoHandler)
-    println("State: CLOSED")
     # Signal the script that the connection is closed.
-    enqueue!(handler.stop_channel, "closed") #put
+    enqueue!(handler.stop_channel, "closed")
+    println("State: CLOSED")
 end
 
 # Create a WSClient, which we can use to connect and send frames.

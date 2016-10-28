@@ -36,6 +36,8 @@ wsh = WebSockets.WebSocketHandler() do req,client
         end
     end
     println("End-to-end web socket test finishes");
+    # stop the background web socket server
+    close(server.http.sock)
   end
 
 # run web socket server in the background
