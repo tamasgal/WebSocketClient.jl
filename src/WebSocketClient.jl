@@ -47,7 +47,5 @@ include("client_logic.jl")
 include("ping.jl")
 include("handshake.jl")
 include("client.jl")
-#include("reconnect.jl")
-#include("mock.jl")
 
 end # module

@@ -6,8 +6,7 @@
 # prerequisites for this package to a minimum, at least for now.
 
 export @mock, @mockfunction, @expect, Throws, MockExpectationException,
-       MockCall, ValueMatcher, mock_match, TypeMatcher, AbstractMatcher,
-       mock_match
+       MockCall, ValueMatcher, mock_match, TypeMatcher, AbstractMatcher
 
 "Tells a mock function that it should throw an exception."
 immutable Throws
@@ -139,11 +138,11 @@ macro mockfunction(t::Symbol, fdefs...)
             for i in range(1, length(mock_call.args))
                 matcher = mock_call.args[i]
                 arg = args[i]
-                WebSocketClient.mock_match(matcher, arg)
+                mock_match(matcher, arg)
             end
 
             # Perform the action set with the @expect macro.
-            return WebSocketClient.mock_action(mock_call.action)
+            return mock_action(mock_call.action)
         end
 
         fun = Expr(:function)

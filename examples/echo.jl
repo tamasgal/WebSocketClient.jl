@@ -39,7 +39,7 @@ function state_open(handler::EchoHandler)
         send_binary(handler.client, b"Hello, binary!")
 
         # Signal that we're done sending all messages.
-        # stop(handler.client)
+        stop(handler.client)
     end
 end
 
