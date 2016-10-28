@@ -32,5 +32,25 @@ To install this package, just start "julia" at the command line and do
 Pkg.clone("https://github.com/ericcwlaw/WebSocketClient.jl")
 ```
 
-To test, write a Java web socket echo server listening to "ws://127.0.0.1:8087/ws/hello".
-"cd" to the example folder and enter "julia echo.jl"
+## Running the web socket echo example
+
+In the example folder, there are two files, echo.jl and simple_ws_server.jl.
+You may try the example with the following:
+
+Install "WebSockets" server package if you have not done so.
+```
+julia> Pkg.add("WebSockets")
+```
+
+Open a terminal and start the web socket server.
+```
+$ julia simple_ws_server.jl
+```
+The web socket server will run in the foreground. You can stop it using control-C.
+
+To run the example echo.jl
+```
+$ julia echo.jl
+```
+This will run the echo example script. You will see it sending 10,000 text messages and one binary message.
+The web socket server will echo them back as text messages.
