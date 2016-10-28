@@ -41,16 +41,19 @@ Pkg.clone("https://github.com/ericcwlaw/WebSocketClient.jl")
 In the example folder, there are two files, echo.jl and simple_ws_server.jl.
 You may try the example with the following:
 
-Install "WebSockets" server package if you have not done so.
+Install "DataStructures" and "WebSockets" packages if you have not done so. The latter is used by simple_ws_server.jl.
 ```
+julia> Pkg.add("DataStructures")
 julia> Pkg.add("WebSockets")
 ```
 
 Open a terminal and start the web socket server.
 ```
 $ julia simple_ws_server.jl
+Listening on 0.0.0.0:8087...
+
+(The web socket server will run in the foreground. You can stop it using control-C.)
 ```
-The web socket server will run in the foreground. You can stop it using control-C.
 
 To run the example echo.jl
 ```
@@ -64,4 +67,4 @@ To rerun the example, start the server and then the client again.
 
 ## Pre-requisites for julia tests
 
-Please install "DataStructures" and "FactCheck". The end_to_end_test.jl uses the Queue object (from DataStructures) to send control signals and messages because the WebSocketClient is event-driven. FactCheck is used as the test framework.
+Please install "DataStructures", "WebSockets" and "FactCheck". The end_to_end_test.jl uses the Queue object (from DataStructures) to send control signals and messages because the WebSocketClient is event-driven. FactCheck is used as the test framework.
