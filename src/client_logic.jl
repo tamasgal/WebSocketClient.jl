@@ -270,7 +270,7 @@ end
 function masking!(input::Vector{UInt8}, mask::Vector{UInt8})
 	m = 1
 	for i in 1:length(input)
-		input[i] = input[i] $ mask[(m - 1) % 4 + 1]
+		input[i] = input[i] ⊻ mask[(m - 1) % 4 + 1]
 		m += 1
 	end
 end
