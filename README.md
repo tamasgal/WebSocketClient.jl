@@ -33,7 +33,7 @@ Please see the original README:
 
 To install this package, just start "julia" at the command line and do
 ```
-Pkg.clone("https://github.com/ericcwlaw/WebSocketClient.jl")
+Pkg.clone("https://github.com/tamasgal/WebSocketClient.jl")
 ```
 
 ## Running the web socket echo example
