@@ -15,11 +15,11 @@ export WebSocketHandler,
        state_open,
        wsconnect
 
-abstract AbstractWSClient
+abstract type AbstractWSClient end
 
 # This defines the public interface that the user should implement. These are callbacks called when
 # events arrive from this WebSocket library.
-abstract WebSocketHandler
+abstract type WebSocketHandler end
 
 "Handle a text frame."
 on_text(t::WebSocketHandler, ::String) = nothing

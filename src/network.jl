@@ -5,7 +5,7 @@ import Base: read, write
 "An exception thrown into a task in order to stop it."
 type StopTaskException <: Exception end
 
-abstract AbstractServerReader
+abstract type AbstractServerReader end
 
 "Reading from a network socket and placing the resulting frame on a channel."
 immutable ServerReader <: AbstractServerReader

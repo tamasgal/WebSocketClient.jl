@@ -2,9 +2,9 @@
 # the task proxy, and those functions and their arguments are sent via a channel to another
 # coroutine, that performs the function calls on the target object.
 
-abstract TaskProxy
+abstract type TaskProxy end
 
-typealias ProxyCall Tuple{Function, Vector{Any}}
+const ProxyCall = Tuple{Function, Vector{Any}}
 
 macro taskproxy(proxy_type::Symbol, abstract_type::Symbol, target_type::Symbol, functions...)
 
