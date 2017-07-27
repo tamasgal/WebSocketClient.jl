@@ -37,7 +37,7 @@ type WSClient <: AbstractWSClient
 
     function WSClient(;
                       do_handshake=WebSocketClient.do_handshake,
-                      rng::AbstractRNG=MersenneTwister(),
+                      rng::AbstractRNG=MersenneTwister(0),
                       writer::AbstractWriterTaskProxy=WriterTaskProxy(),
                       handler_proxy::AbstractHandlerTaskProxy=HandlerTaskProxy(),
                       logic_proxy::AbstractClientTaskProxy=ClientLogicTaskProxy(),
